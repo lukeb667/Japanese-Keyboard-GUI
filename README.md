@@ -9,6 +9,7 @@ INSTALLATION
 5. A functioning .exe file should now be found in the newly created `dist` folder
 
 DESCRIPTION
+
 This program uses the keyboard module (with modifications) to identify when a typed string matches to a Japanese character based on a dictionary of corresponding phonetic moras or syllables. When a match is identified, the typed string will be replaced with the Japanese character. E.g., typing 'ka' while the program is running will type 'か' instead of the Latin characters. The program can be switched between Hiragana and Katakana via the default hotkey 'shift+space', or can be toggled on/off entirely with 'ctrl+space'. Pressing 'esc' at any time will terminate the program. 
 
 The program suppresses physical keystrokes, and includes a GUI to display what you are currently typing. The GUI can be enabled/disabled with the default hotkey 'shift+f1'. Queued keystrokes will be sent after a configurable delay (default 10 seconds), whereafter the script will call an appropriate number of backspace keystrokes for a matched translation key.
