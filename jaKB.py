@@ -344,7 +344,7 @@ class TranslationAPI():
 
     def exit(self):
         self.running = False
-        return
+    
     def add_kanji_key():
         if gv.adding_kanji == False:
             try:
