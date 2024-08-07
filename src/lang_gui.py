@@ -43,8 +43,8 @@ class TranslationGUI:
 
     def exit(self):
         self.running = False
-        try: pygame.display.quit()
-        except: os.kill(os.getpid(), 0)
+        pygame.display.quit()
+        os.kill(os.getpid(), 0)
     
     def update_text(self, text):
         self.text = text
