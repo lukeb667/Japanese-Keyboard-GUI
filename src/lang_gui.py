@@ -43,7 +43,8 @@ class TranslationGUI:
 
     def exit(self):
         self.running = False
-        exit()
+        try: pygame.display.quit()
+        except: os.kill(os.getpid(), 0)
     
     def update_text(self, text):
         self.text = text
@@ -93,6 +94,3 @@ class TranslationGUI:
                     else: win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(self.msize[1] - self.screen_y), 0, 0, win32con.SWP_NOSIZE)
             pygame.display.update()
         else: return False
-
-
-
