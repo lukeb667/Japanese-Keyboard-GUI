@@ -3,10 +3,11 @@ Translate English/Latin syllables to equivalent Japanese Hiragana or Katakana ch
 
 INSTALLATION
 1. Ensure you are on a Windows OS
-2. Extract the repository to a folder of your choice
-3. Install `requirements.txt` by running `pip install -r requirements.txt` in the installation folder 
-4. Run `build-win.bat` in the installation folder
-5. A functioning .exe file should now be found in the newly created `dist` folder
+2. Ensure [Python is installed]([url](https://www.python.org/downloads/))
+3. Extract the repository to a folder of your choice
+4. Install `requirements.txt` by running `pip install -r requirements.txt` in the installation folder 
+5. Run `build-win.bat` in the installation folder
+6. A functioning .exe file should now be found in the newly created `dist` folder
 
 DESCRIPTION
 
