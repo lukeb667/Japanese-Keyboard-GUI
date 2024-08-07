@@ -43,7 +43,7 @@ class TranslationGUI:
 
     def exit(self):
         self.running = False
-        return
+        exit()
     
     def update_text(self, text):
         self.text = text
@@ -61,36 +61,38 @@ class TranslationGUI:
             # self.text = '日本語'
 
     def mainloop(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.exit()
-                return
+        if self.running == True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.exit()
+                    return False
 
-        mouse_pos = mouse.get_position()
-        self.screen.blit(self.bg,(0,0))
+            mouse_pos = mouse.get_position()
+            self.screen.blit(self.bg,(0,0))
 
-        self.rendered_text = pygame.font.Font.render(self.font, self.text, True, 'BLACK')
-        self.screen.blit(self.rendered_text, (self.screen_x/2 - self.rendered_text.get_width()/2, self.screen_y/2 - self.rendered_text.get_height()/2))
-        if pygame.mouse.get_pressed()[0]: self.can_click = False
-        else: self.can_click = True
-        if self.bg_color[0] < 255:
-            self.bg_color[0] += 1
-        if self.bg_color[1] < 255:
-            self.bg_color[1] += 1
-        if self.bg_color[2] < 255:
-            self.bg_color[2] += 1
-        time.sleep(.005)
-        self.bg.fill(self.bg_color)
-        if self.hidden == False:
-            if self.location == 'top':
-                if mouse_pos[1] <= self.screen_y + 50:
-                    win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(mouse_pos[1] - self.screen_y - 50), 0, 0, win32con.SWP_NOSIZE)
-                else: win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), 0, 0, 0, win32con.SWP_NOSIZE)
-            elif self.location == 'bottom':
-                if mouse_pos[1] >= self.msize[1] - self.screen_y - 50:
-                    win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(mouse_pos[1] + 50), 0, 0, win32con.SWP_NOSIZE)
-                else: win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(self.msize[1] - self.screen_y), 0, 0, win32con.SWP_NOSIZE)
-        pygame.display.update()
+            self.rendered_text = pygame.font.Font.render(self.font, self.text, True, 'BLACK')
+            self.screen.blit(self.rendered_text, (self.screen_x/2 - self.rendered_text.get_width()/2, self.screen_y/2 - self.rendered_text.get_height()/2))
+            if pygame.mouse.get_pressed()[0]: self.can_click = False
+            else: self.can_click = True
+            if self.bg_color[0] < 255:
+                self.bg_color[0] += 1
+            if self.bg_color[1] < 255:
+                self.bg_color[1] += 1
+            if self.bg_color[2] < 255:
+                self.bg_color[2] += 1
+            time.sleep(.005)
+            self.bg.fill(self.bg_color)
+            if self.hidden == False:
+                if self.location == 'top':
+                    if mouse_pos[1] <= self.screen_y + 50:
+                        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(mouse_pos[1] - self.screen_y - 50), 0, 0, win32con.SWP_NOSIZE)
+                    else: win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), 0, 0, 0, win32con.SWP_NOSIZE)
+                elif self.location == 'bottom':
+                    if mouse_pos[1] >= self.msize[1] - self.screen_y - 50:
+                        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(mouse_pos[1] + 50), 0, 0, win32con.SWP_NOSIZE)
+                    else: win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, int(self.msize[0]/2 - self.screen_x/2), int(self.msize[1] - self.screen_y), 0, 0, win32con.SWP_NOSIZE)
+            pygame.display.update()
+        else: return False
 
 
 
