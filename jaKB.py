@@ -251,6 +251,13 @@ class _Language():
         else: return False
 
     def handle_kanji_addition(event):
+        def finalize(msg="Kanji Added", color=[200,255,200]):
+            _Language.new_kanji_key = '' 
+            _Language.new_kanji_translation = '' 
+            gv.adding_kanji = False
+            gv.translation_gui.update_text(msg) 
+            gv.translation_gui.flash(color)
+
         if gv.adding_kanji == True:
             if len(event.name) == 1:
                 _Language.new_kanji_key += event.name
@@ -262,8 +269,18 @@ class _Language():
                 with open('src/ja_translation_dict.txt', 'r', encoding='utf-8') as file:
                     lines = file.readlines() 
                     has_key = 0
+
+                    # Ensure no empty key 
+                    if _Language.new_kanji_key == '':
+                        finalize('Invalid Key', [255,200,200]) 
+                        return True
+
                     for line in lines:
-                        if "'/" + _Language.new_kanji_key + "':" in line or "'/" + _Language.new_kanji_key + "-" in line: has_key += 1 
+                        if "'/" + _Language.new_kanji_key + "':" in line or "'/" + _Language.new_kanji_key + "-" in line: 
+                            if "['" + _Language.new_kanji_translation + "']" in line: 
+                                finalize('Dictionary Already Contains Pair', [255,255,200]) 
+                                return True
+                            else: has_key += 1 
                     for line in lines:
                         if '<KANJI>' in line:
                             if has_key == 0:
@@ -273,13 +290,7 @@ class _Language():
                 with open('src/ja_translation_dict.txt', 'w', encoding='utf-8') as file:
                     for line in lines: 
                         file.writelines(line) 
-                
-                _Language.new_kanji_key = '' 
-                _Language.new_kanji_translation = '' 
-                _Language.ja_translation_dict = _Helpers.load_translation_dict()
-                gv.adding_kanji = False
-                gv.translation_gui.update_text('Kanji Added')
-                gv.translation_gui.flash([200,255,200])
+                finalize()
             return True
             
     def pre_process_event(event):
@@ -337,7 +348,7 @@ class TranslationAPI():
 
         while self.running == True:
             gv.translation_gui.mainloop()
-            if gv.translation_gui.running == False:
+            if gv.translation_gui.running == False: 
                 self.running = False 
         
         # Exit Code
@@ -388,3 +399,6 @@ class TranslationAPI():
         gv.translation_gui.hide()
 
 main = TranslationAPI()
+
+
+
