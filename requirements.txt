@@ -3,3 +3,4 @@ pygame
 keyboard
 mouse
 configparser
+pywin32
