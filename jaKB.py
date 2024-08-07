@@ -3,6 +3,7 @@ import src.modified_keyboard as keyboard
 import src.lang_gui as tt # GUI handler
 import win32clipboard # For adding Kanji keys
 import configparser # For reading the config file
+import os
 from threading import Timer 
 
 
@@ -52,18 +53,12 @@ class _Helpers():
         del keyboard._listener.blocking_hooks[:]
         del keyboard._listener.handlers[:]
 
-    def add_hotkeys(switch_hotkey=gv.switch_hotkey, toggle_hotkey=gv.toggle_hotkey, exit_hotkey=gv.exit_hotkey, add_kanji_hotkey=gv.add_kanji_hotkey, toggle_gui_hotkey=gv.toggle_gui_hotkey):
-        # Add the program control hotkeys. Switch the gloval variables recording them if they differ from the values passed to this function
-        gv.switch_hotkey = switch_hotkey
-        gv.toggle_hotkey = toggle_hotkey
-        gv.toggle_gui_hotkey = toggle_gui_hotkey
-        gv.exit_hotkey = exit_hotkey
-        gv.add_kanji_hotkey = add_kanji_hotkey
-
-        keyboard.add_hotkey(switch_hotkey, lambda: TranslationAPI.switch()) # Trigger the hirigana/katakana switch
-        keyboard.add_hotkey(toggle_hotkey, lambda: TranslationAPI.enable_disable()) # Enable/disable translation while still running the script
-        keyboard.add_hotkey(add_kanji_hotkey, lambda: TranslationAPI.add_kanji_key()) # Add a kanji / latin pair
-        keyboard.add_hotkey(toggle_gui_hotkey, lambda: _Helpers.toggle_gui()) # Hide/reveal the gui
+    def add_hotkeys(translation_api):
+        keyboard.add_hotkey(gv.switch_hotkey, lambda: TranslationAPI.switch()) # Trigger the hirigana/katakana switch
+        keyboard.add_hotkey(gv.toggle_hotkey, lambda: TranslationAPI.enable_disable()) # Enable/disable translation while still running the script
+        keyboard.add_hotkey(gv.add_kanji_hotkey, lambda: TranslationAPI.add_kanji_key()) # Add a kanji / latin pair
+        keyboard.add_hotkey(gv.toggle_gui_hotkey, lambda: _Helpers.toggle_gui()) # Hide/reveal the gui
+        keyboard.add_hotkey(gv.exit_hotkey, lambda: translation_api.exit())
 
     def toggle_gui(): # Hide/reveal the gui
         if gv.translate_bool == True:
@@ -328,14 +323,13 @@ class _Language():
             return
 
 class TranslationAPI():
-    def __init__(self, switch_hotkey:str=gv.switch_hotkey,toggle_hotkey:str=gv.toggle_hotkey, exit_hotkey:str=gv.exit_hotkey) -> None:
+    def __init__(self) -> None:
         self.running = True
         if gv.reveal_delay < .05: gv.reveal_delay = .05 # Minimum reveal timer. A timer quicker than this can confuse the system and cause unwanted key calls.
 
         # Add keyboard hooks and listeners
-        _Helpers.add_hotkeys(switch_hotkey=switch_hotkey, toggle_hotkey=toggle_hotkey, exit_hotkey=exit_hotkey)
+        _Helpers.add_hotkeys(self)
         _Helpers.add_hooks()
-        keyboard.add_hotkey(gv.exit_hotkey, lambda: self.exit())
 
         while self.running == True:
             gv.translation_gui.mainloop()
@@ -343,9 +337,10 @@ class TranslationAPI():
                 self.running = False 
         
         # Exit Code
-        gv.translation_gui.exit()
         keyboard.remove_all_hotkeys()
         _Helpers.remove_hooks()
+        gv.translation_gui.exit()
+        os.kill(os.getpid(), 0)
         
     def exit(self):
         self.running = False
