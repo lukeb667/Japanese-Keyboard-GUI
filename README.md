@@ -3,7 +3,7 @@ Translate English/Latin syllables to equivalent Japanese Hiragana or Katakana ch
 
 INSTALLATION
 1. Ensure you are on a Windows OS
-2. Ensure [Python is installed]([url](https://www.python.org/downloads))
+2. Ensure [Python](https://www.python.org/downloads/) is installed on your machine
 3. Extract the repository to a folder of your choice
 4. Install `requirements.txt` by running `pip install -r requirements.txt` in the installation folder 
 5. Run `build-win.bat` in the installation folder
