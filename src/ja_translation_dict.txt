@@ -186,8 +186,7 @@
         'nz': ['ん', 'ン'], 
     },
     '<KANJI>': { # Kanji
-
-		'/kenban':['鍵盤'],
+	'/kenban':['鍵盤'],
         '/kanji':['漢字'],
         '/ji-1':['字'],
         '/ocha':['お茶'],
@@ -231,9 +230,6 @@
         '/yasumi':['休み'],
         '/nani':['何'],
         '/gatsu':['月'],
-
-
-        # Numbers
         '/ichi': ['一'],
         '/ni': ['二'],
         '/san': ['三'],
@@ -244,12 +240,9 @@
         '/hachi': ['八'],
         '/ku': ['九'], '/kyu': ['九'],
         '/juu': ['十'],
-
         '/han': ['半'],
         '/hyaku': ['百'],
         '/sen': ['千'],
-        
-        # Common 
         '/hito': ['人'],
         '/ten': ['天'],
         '/dai': ['大'], '/oo': ['大'],
@@ -301,16 +294,9 @@
         '/fun': ['分'], # Minutes
         '/ookii': ['大きい'], # Big
         '/yasumimasu': ['休みます'], # Rest
-        
-        
-
-
-        # Cities / places
         '/nihon': ['日本'],
         '/tokyo': ['東京'],
         '/kyoto': ['京都'],
-
-        # Misc
         '/yama': ['山'], # Mountain
         '/guchi': ['口'],
         '/ta': ['田'],
