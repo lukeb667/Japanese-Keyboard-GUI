@@ -339,9 +339,14 @@ class TranslationAPI():
 
         while self.running == True:
             gv.translation_gui.mainloop()
-        gv.translation_gui.exit()
+            if gv.translation_gui.running == False:
+                self.running = False 
         
-
+        # Exit Code
+        gv.translation_gui.exit()
+        keyboard.remove_all_hotkeys()
+        _Helpers.remove_hooks()
+        
     def exit(self):
         self.running = False
     
@@ -384,6 +389,3 @@ class TranslationAPI():
         gv.translation_gui.hide()
 
 main = TranslationAPI()
-
-
-
