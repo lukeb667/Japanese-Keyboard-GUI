@@ -4,8 +4,8 @@ Translate English/Latin syllables to equivalent Japanese Hiragana or Katakana ch
 INSTALLATION
 1. Ensure you are on a Windows OS
 2. Extract the repository to a folder of your choice
-3. Install `requirements.txt`
-4. Run `build-win.bat`
+3. Install `requirements.txt` by running `pip install -r requirements.txt` in the installation folder 
+4. Run `build-win.bat` in the installation folder
 5. A functioning .exe file should now be found in the newly created `dist` folder
 
 DESCRIPTION
